@@ -1,0 +1,7 @@
+{
+    "name": "M5 Max3421e USB Arduino Library",
+    "build": {
+        "libArchive": false,
+        "flags": "-DUSE_M5_Max3421e_USB"
+    }
+}
