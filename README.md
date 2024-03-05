@@ -14,7 +14,7 @@ USB driver module in the M5Stack stackable module series, adopting the MAX3421E 
 
 ## Notes Module V1.2:
 
-The board is equipped with two dip switches to adapt to different M5 series host devices.
+The board is equipped with two dip switches to suit different M5 series host devices.
 
 library
 ---------------------------
