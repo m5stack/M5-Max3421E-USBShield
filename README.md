@@ -19,6 +19,5 @@ The board is equipped with two dip switches to adapt to different M5 series host
 library
 ---------------------------
 
-- [M5_Ethernet](https://github.com/m5stack/M5-Ethernet)
 - [M5GFX](https://github.com/m5stack/M5GFX)  
 - [M5Unified](https://github.com/m5stack/M5Unified)
