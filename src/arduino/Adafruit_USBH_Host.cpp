@@ -35,10 +35,10 @@
 #include "Adafruit_TinyUSB_API.h"
 #include "Adafruit_USBH_Host.h"
 
-Adafruit_USBH_Host *Adafruit_USBH_Host::_instance = NULL;
+M5_USBH_Host *M5_USBH_Host::_instance = NULL;
 
-Adafruit_USBH_Host::Adafruit_USBH_Host(void) {
-    Adafruit_USBH_Host::_instance = this;
+M5_USBH_Host::M5_USBH_Host(void) {
+    M5_USBH_Host::_instance = this;
     _rhport                       = 0;
 #if defined(CFG_TUH_MAX3421) && CFG_TUH_MAX3421
     _spi = NULL;
@@ -63,8 +63,8 @@ SemaphoreHandle_t max3421_intr_sem;
 static void max3421_intr_task(void *param);
 #endif
 
-Adafruit_USBH_Host::Adafruit_USBH_Host(SPIClass *spi, int8_t cs, int8_t intr) {
-    Adafruit_USBH_Host::_instance = this;
+M5_USBH_Host::M5_USBH_Host(SPIClass *spi, int8_t cs, int8_t intr) {
+    M5_USBH_Host::_instance = this;
     _rhport                       = 0;
     _spi                          = spi;
     _cs                           = cs;
@@ -72,9 +72,9 @@ Adafruit_USBH_Host::Adafruit_USBH_Host(SPIClass *spi, int8_t cs, int8_t intr) {
     _sck = _mosi = _miso = -1;
 }
 
-Adafruit_USBH_Host::Adafruit_USBH_Host(SPIClass *spi, int8_t sck, int8_t mosi,
+M5_USBH_Host::M5_USBH_Host(SPIClass *spi, int8_t sck, int8_t mosi,
                                        int8_t miso, int8_t cs, int8_t intr) {
-    Adafruit_USBH_Host::_instance = this;
+    M5_USBH_Host::_instance = this;
     _rhport                       = 0;
     _spi                          = spi;
     _cs                           = cs;
@@ -84,30 +84,30 @@ Adafruit_USBH_Host::Adafruit_USBH_Host(SPIClass *spi, int8_t sck, int8_t mosi,
     _miso                         = miso;
 }
 
-uint8_t Adafruit_USBH_Host::max3421_readRegister(uint8_t reg, bool in_isr) {
+uint8_t M5_USBH_Host::max3421_readRegister(uint8_t reg, bool in_isr) {
     return tuh_max3421_reg_read(_rhport, reg, in_isr);
 }
 
-bool Adafruit_USBH_Host::max3421_writeRegister(uint8_t reg, uint8_t data,
+bool M5_USBH_Host::max3421_writeRegister(uint8_t reg, uint8_t data,
                                                bool in_isr) {
     return tuh_max3421_reg_write(_rhport, reg, data, in_isr);
 }
 
 #endif
 
-bool Adafruit_USBH_Host::configure(uint8_t rhport, uint32_t cfg_id,
+bool M5_USBH_Host::configure(uint8_t rhport, uint32_t cfg_id,
                                    const void *cfg_param) {
     return tuh_configure(rhport, cfg_id, cfg_param);
 }
 
 #ifdef ARDUINO_ARCH_RP2040
-bool Adafruit_USBH_Host::configure_pio_usb(uint8_t rhport,
+bool M5_USBH_Host::configure_pio_usb(uint8_t rhport,
                                            const void *cfg_param) {
     return configure(rhport, TUH_CFGID_RPI_PIO_USB_CONFIGURATION, cfg_param);
 }
 #endif
 
-bool Adafruit_USBH_Host::begin(uint8_t rhport) {
+bool M5_USBH_Host::begin(uint8_t rhport) {
 #if defined(CFG_TUH_MAX3421) && CFG_TUH_MAX3421
     if (_intr < 0 || _cs < 0 || !_spi) {
         return false;
@@ -140,7 +140,7 @@ bool Adafruit_USBH_Host::begin(uint8_t rhport) {
     return tuh_init(rhport);
 }
 
-void Adafruit_USBH_Host::task(uint32_t timeout_ms, bool in_isr) {
+void M5_USBH_Host::task(uint32_t timeout_ms, bool in_isr) {
     tuh_task_ext(timeout_ms, in_isr);
 }
 
@@ -223,10 +223,10 @@ extern "C" {
 void tuh_max3421_spi_cs_api(uint8_t rhport, bool active) {
     (void)rhport;
 
-    if (!Adafruit_USBH_Host::_instance) {
+    if (!M5_USBH_Host::_instance) {
         return;
     }
-    Adafruit_USBH_Host *host = Adafruit_USBH_Host::_instance;
+    M5_USBH_Host *host = M5_USBH_Host::_instance;
     SPIClass *spi            = host->_spi;
 
     if (active) {
@@ -240,10 +240,10 @@ void tuh_max3421_spi_cs_api(uint8_t rhport, bool active) {
 #endif
 
         spi->beginTransaction(SPISettings(max_clock, MSBFIRST, SPI_MODE0));
-        digitalWrite(Adafruit_USBH_Host::_instance->_cs, LOW);
+        digitalWrite(M5_USBH_Host::_instance->_cs, LOW);
     } else {
         spi->endTransaction();
-        digitalWrite(Adafruit_USBH_Host::_instance->_cs, HIGH);
+        digitalWrite(M5_USBH_Host::_instance->_cs, HIGH);
     }
 }
 
@@ -251,10 +251,10 @@ bool tuh_max3421_spi_xfer_api(uint8_t rhport, uint8_t const *tx_buf,
                               uint8_t *rx_buf, size_t xfer_bytes) {
     (void)rhport;
 
-    if (!Adafruit_USBH_Host::_instance) {
+    if (!M5_USBH_Host::_instance) {
         return false;
     }
-    Adafruit_USBH_Host *host = Adafruit_USBH_Host::_instance;
+    M5_USBH_Host *host = M5_USBH_Host::_instance;
     SPIClass *spi            = host->_spi;
 
 #ifdef ARDUINO_ARCH_SAMD
@@ -285,10 +285,10 @@ bool tuh_max3421_spi_xfer_api(uint8_t rhport, uint8_t const *tx_buf,
 void tuh_max3421_int_api(uint8_t rhport, bool enabled) {
     (void)rhport;
 
-    if (!Adafruit_USBH_Host::_instance) {
+    if (!M5_USBH_Host::_instance) {
         return;
     }
-    Adafruit_USBH_Host *host = Adafruit_USBH_Host::_instance;
+    M5_USBH_Host *host = M5_USBH_Host::_instance;
     (void)host;
 
 #ifdef ARDUINO_ARCH_SAMD

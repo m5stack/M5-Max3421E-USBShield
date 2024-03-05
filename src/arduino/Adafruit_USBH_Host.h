@@ -41,7 +41,7 @@ bool tuh_max3421_spi_xfer_api(uint8_t rhport, uint8_t const *tx_buf,
 void tuh_max3421_int_api(uint8_t rhport, bool enabled);
 }
 
-class Adafruit_USBH_Host {
+class M5_USBH_Host {
 private:
   SPIClass *_spi;
 
@@ -53,8 +53,8 @@ public:
   int8_t _intr;
 
   // constructor for using MAX3421E (host shield)
-  Adafruit_USBH_Host(SPIClass *spi, int8_t cs, int8_t intr);
-  Adafruit_USBH_Host(SPIClass *spi, int8_t sck, int8_t mosi, int8_t miso,
+  M5_USBH_Host(SPIClass *spi, int8_t cs, int8_t intr);
+  M5_USBH_Host(SPIClass *spi, int8_t sck, int8_t mosi, int8_t miso,
                      int8_t cs, int8_t intr);
 
   uint8_t max3421_readRegister(uint8_t reg, bool in_isr);
@@ -75,12 +75,12 @@ private:
   friend void tuh_max3421_int_api(uint8_t rhport, bool enabled);
 #else
 
-class Adafruit_USBH_Host {
+class M5_USBH_Host {
 #endif
 
 public:
   // default constructor
-  Adafruit_USBH_Host(void);
+  M5_USBH_Host(void);
 
   bool configure(uint8_t rhport, uint32_t cfg_id, const void *cfg_param);
 
@@ -92,7 +92,7 @@ public:
   void task(uint32_t timeout_ms = UINT32_MAX, bool in_isr = false);
 
   //------------- internal usage -------------//
-  static Adafruit_USBH_Host *_instance;
+  static M5_USBH_Host *_instance;
 
 private:
   uint8_t _rhport;
