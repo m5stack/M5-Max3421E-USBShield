@@ -10,10 +10,15 @@ English | [中文](README_cn.md)
 
 ## Description:
 
-USB driver module in the M5Stack stackable module series, adopting the MAX3421E chip solution. It provides a standard USB interface, supporting both USB host and peripheral functions. It is compatible with a wide range of USB devices and operating systems, connecting to the system via SPI communication.
+USB driver module in the M5Stack stackable module series, adopting the MAX3421E chip solution. It provides a standard USB interface, supporting both USB host and peripheral functions. It is compatible with a wide range of USB devices and operating systems, connecting to the system via SPI communication, and reserves pins for controlling external devices or reading their status.
 
 ## Notes Module V1.2:
 
-The board is equipped with two dip switches to adapt to different M5 series hosts and reserves pins for controlling external devices or reading their status. 
+The board is equipped with two dip switches to adapt to different M5 series host devices.
 
+library
+---------------------------
 
+- [M5_Ethernet](https://github.com/m5stack/M5-Ethernet)
+- [M5GFX](https://github.com/m5stack/M5GFX)  
+- [M5Unified](https://github.com/m5stack/M5Unified)
