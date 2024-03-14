@@ -21,3 +21,10 @@ library
 
 - [M5GFX](https://github.com/m5stack/M5GFX)  
 - [M5Unified](https://github.com/m5stack/M5Unified)
+
+
+## Credits & License:
+
+- [Adafruit_TinyUSB_Arduino] Copyright (c) 2019 Ha Thach for Adafruit Industries and licensed under MIT License.
+
+[Adafruit_TinyUSB_Arduino]: https://github.com/adafruit/Adafruit_TinyUSB_Arduino

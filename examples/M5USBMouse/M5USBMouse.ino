@@ -8,7 +8,7 @@
   The board is equipped with two dip switches to adapt to different M5 series hosts.
   https://static-cdn.m5stack.com/resource/docs/products/module/USB%20v1.2%20Module/pinMap-70b8e2ad-8325-4887-af33-44e3dae91520.png
   If you need to change the spi pin, use these spi configuration settings
-  Adafruit_USBH_Host USBHost(&SPI, 18, 23, 19, 5, 35);
+  M5_USBH_Host USBHost(&SPI, 18, 23, 19, 5, 35);
 */
 
 M5_USBH_Host USBHost(&SPI, 18, 23, 19, 5, 35);
