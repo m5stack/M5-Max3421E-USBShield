@@ -63,16 +63,31 @@ extern "C" {
 // DEVICE CONFIGURATION
 //--------------------------------------------------------------------
 
-#define CFG_TUD_ENDOINT0_SIZE 64
+#if CFG_TUD_ENABLED
+#define CFG_TUD_ENDPOINT0_SIZE 64
 
 //------------- CLASS -------------//
+#ifndef CFG_TUD_CDC
 #define CFG_TUD_CDC 1
+#endif
+#ifndef CFG_TUD_MSC
 #define CFG_TUD_MSC 1
+#endif
+#ifndef CFG_TUD_HID
 #define CFG_TUD_HID 2
+#endif
+#ifndef CFG_TUD_MIDI
 #define CFG_TUD_MIDI 1
+#endif
+#ifndef CFG_TUD_VENDOR
 #define CFG_TUD_VENDOR 1
-#define CFG_TUD_VIDEO 1           // number of video control interfaces
+#endif
+#ifndef CFG_TUD_VIDEO
+#define CFG_TUD_VIDEO 1 // number of video control interfaces
+#endif
+#ifndef CFG_TUD_VIDEO_STREAMING
 #define CFG_TUD_VIDEO_STREAMING 1 // number of video streaming interfaces
+#endif
 
 // video streaming endpoint buffer size
 #define CFG_TUD_VIDEO_STREAMING_EP_BUFSIZE 256
@@ -100,9 +115,13 @@ extern "C" {
 #define CFG_TUD_VENDOR_TX_BUFSIZE 64
 #endif
 
+#endif
+
 //--------------------------------------------------------------------
 // Host Configuration
 //--------------------------------------------------------------------
+
+#if CFG_TUH_ENABLED
 
 // Size of buffer to hold descriptors and other data used for enumeration
 #define CFG_TUH_ENUMERATION_BUFSIZE 256
@@ -143,6 +162,8 @@ extern "C" {
 // This need Pico-PIO-USB at least 0.5.1
 #define CFG_TUH_CDC_LINE_CODING_ON_ENUM                                        \
   { 115200, CDC_LINE_CONDING_STOP_BITS_1, CDC_LINE_CODING_PARITY_NONE, 8 }
+
+#endif
 
 #ifdef __cplusplus
 }

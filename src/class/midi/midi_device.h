@@ -116,9 +116,9 @@ static inline bool tud_midi_receive(uint8_t packet[4])
 }
 
 //--------------------------------------------------------------------+
-// Application Callback API (weak is optional)
+// Application Callback API (optional)
 //--------------------------------------------------------------------+
-TU_ATTR_WEAK void tud_midi_rx_cb(uint8_t itf);
+void tud_midi_rx_cb(uint8_t itf);
 
 //--------------------------------------------------------------------+
 // Inline Functions
@@ -158,6 +158,7 @@ static inline bool tud_midi_packet_write (uint8_t const packet[4])
 // Internal Class Driver API
 //--------------------------------------------------------------------+
 void     midid_init            (void);
+bool     midid_deinit          (void);
 void     midid_reset           (uint8_t rhport);
 uint16_t midid_open            (uint8_t rhport, tusb_desc_interface_t const * itf_desc, uint16_t max_len);
 bool     midid_control_xfer_cb (uint8_t rhport, uint8_t stage, tusb_control_request_t const * request);

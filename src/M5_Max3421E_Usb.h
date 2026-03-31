@@ -25,18 +25,6 @@
 #ifndef M5_MAX3421E_USB_H_
 #define M5_MAX3421E_USB_H_
 
-// Error message for Core that must select TinyUSB via menu
-#if !defined(USE_TINYUSB) &&                                                   \
-    (defined(ARDUINO_ARCH_SAMD) ||                                             \
-     (defined(ARDUINO_ARCH_RP2040) && !defined(ARDUINO_ARCH_MBED)))
-#error TinyUSB is not selected, please select it in "Tools->Menu->USB Stack"
-#endif
-
-// ESP32 out-of-sync
-#ifdef ARDUINO_ARCH_ESP32
-#include "arduino/ports/esp32/tusb_config_esp32.h"
-#endif
-
 #include "tusb_option.h"
 
 // Device
@@ -86,8 +74,6 @@ void TinyUSB_Device_Init(uint8_t rhport);
 #if CFG_TUH_MSC
 #include "arduino/msc/Adafruit_USBH_MSC.h"
 #endif
-
-#include "arduino/hid/Adafruit_USBD_HID.h"
 
 #endif
 

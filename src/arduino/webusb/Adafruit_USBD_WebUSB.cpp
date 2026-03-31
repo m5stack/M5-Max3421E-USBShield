@@ -36,7 +36,7 @@
 //--------------------------------------------------------------------+
 // MACRO TYPEDEF CONSTANT ENUM DECLARATION
 //--------------------------------------------------------------------+
-#define EPSIZE 64
+#define BULK_PACKET_SIZE (TUD_OPT_HIGH_SPEED ? 512 : 64)
 
 enum { VENDOR_REQUEST_WEBUSB = 1, VENDOR_REQUEST_MICROSOFT = 2 };
 
@@ -163,7 +163,7 @@ uint16_t Adafruit_USBD_WebUSB::getInterfaceDescriptor(uint8_t itfnum_deprecated,
   uint8_t const ep_out = TinyUSBDevice.allocEndpoint(TUSB_DIR_OUT);
 
   uint8_t desc[] = {
-      TUD_VENDOR_DESCRIPTOR(itfnum, _strid, ep_out, ep_in, EPSIZE)};
+      TUD_VENDOR_DESCRIPTOR(itfnum, _strid, ep_out, ep_in, BULK_PACKET_SIZE)};
   uint16_t const len = sizeof(desc);
 
   // null buffer for length only
@@ -245,14 +245,15 @@ void Adafruit_USBD_WebUSB::flush(void) { tud_vendor_flush(); }
 //--------------------------------------------------------------------+
 extern "C" {
 
-uint8_t const *tud_descriptor_bos_cb(void) { return desc_bos; }
+TU_ATTR_WEAK uint8_t const *tud_descriptor_bos_cb(void) { return desc_bos; }
 
 // Invoked when a control transfer occurred on an interface of this class
 // Driver response accordingly to the request and the transfer stage
 // (setup/data/ack) return false to stall control endpoint (e.g unsupported
 // request)
-bool tud_vendor_control_xfer_cb(uint8_t rhport, uint8_t stage,
-                                tusb_control_request_t const *request) {
+TU_ATTR_WEAK bool
+tud_vendor_control_xfer_cb(uint8_t rhport, uint8_t stage,
+                           tusb_control_request_t const *request) {
   if (!_webusb_dev) {
     return false;
   }

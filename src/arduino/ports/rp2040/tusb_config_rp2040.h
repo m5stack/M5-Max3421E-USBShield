@@ -79,15 +79,29 @@ extern "C" {
 // Device Configuration
 //--------------------------------------------------------------------
 
-#define CFG_TUD_ENDOINT0_SIZE 64
+#define CFG_TUD_ENDPOINT0_SIZE 64
 
-#define CFG_TUD_CDC 1
+#ifndef CFG_TUD_CDC
+#define CFG_TUD_CDC 2
+#endif
+#ifndef CFG_TUD_MSC
 #define CFG_TUD_MSC 1
+#endif
+#ifndef CFG_TUD_HID
 #define CFG_TUD_HID 2
+#endif
+#ifndef CFG_TUD_MIDI
 #define CFG_TUD_MIDI 1
+#endif
+#ifndef CFG_TUD_VENDOR
 #define CFG_TUD_VENDOR 1
-#define CFG_TUD_VIDEO 1           // number of video control interfaces
+#endif
+#ifndef CFG_TUD_VIDEO
+#define CFG_TUD_VIDEO 1 // number of video control interfaces
+#endif
+#ifndef CFG_TUD_VIDEO_STREAMING
 #define CFG_TUD_VIDEO_STREAMING 1 // number of video streaming interfaces
+#endif
 
 // video streaming endpoint buffer size
 #define CFG_TUD_VIDEO_STREAMING_EP_BUFSIZE 256
@@ -103,8 +117,8 @@ extern "C" {
 #define CFG_TUD_HID_EP_BUFSIZE 64
 
 // MIDI FIFO size of TX and RX
-#define CFG_TUD_MIDI_RX_BUFSIZE 128
-#define CFG_TUD_MIDI_TX_BUFSIZE 128
+#define CFG_TUD_MIDI_RX_BUFSIZE 64
+#define CFG_TUD_MIDI_TX_BUFSIZE 64
 
 // Vendor FIFO size of TX and RX
 #define CFG_TUD_VENDOR_RX_BUFSIZE 64
@@ -122,6 +136,9 @@ extern "C" {
 
 // max device support (excluding hub device): 1 hub typically has 4 ports
 #define CFG_TUH_DEVICE_MAX (3 * CFG_TUH_HUB + 1)
+
+// enable MIDI Host
+#define CFG_TUH_MIDI 1
 
 // Enable tuh_edpt_xfer() API
 // #define CFG_TUH_API_EDPT_XFER       1
